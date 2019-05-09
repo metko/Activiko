@@ -1,0 +1,54 @@
+{
+    "name": "metko/activiko",
+    "description": "Package for login activity of your Laravel application",
+    "keywords": [
+        "metko",
+        "activiko"
+    ],
+    "homepage": "https://github.com/metko/activiko",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Thomas Moiluiavon",
+            "email": "thomas.moiluiavon@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.8.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Metko\\Activiko\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Metko\\Activiko\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Metko\\Activiko\\ActivikoServiceProvider"
+            ],
+            "aliases": {
+                "Activiko": "Metko\\Activiko\\ActivikoFacade"
+            }
+        }
+    }
+}
