@@ -15,6 +15,13 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
+    public function it_has_get_changes()
+    {
+        //TODO
+        $this->assertTrue(true);
+    }
+
+    /** @test */
     public function it_has_lastChanges()
     {
         Post::create(['name' => 'Title post']);
@@ -63,11 +70,11 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_has_disableRecord()
+    public function it_has_disable()
     {
+        //FIXME
         Post::create(['name' => 'Title post']);
         $post = Post::find(1);
-        $post->disableRecord();
-        $this->assertTrue($post->disableRecord);
+        $this->assertTrue(app('activiko')->disable());
     }
 }

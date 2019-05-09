@@ -3,7 +3,6 @@
 namespace Metko\Activiko\Tests;
 
 use Metko\Activiko\Models\Activiko;
-use Metko\Activiko\Exceptions\ActivityDoesNotExists;
 
 class ActivityTest extends TestCase
 {
@@ -50,7 +49,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_records_only_the_specified_events()
+    public function it_record_only_events_given_by_the_property_model()
     {
         Post2::create(['name' => 'Title post']);
         Post2::find(1)->update(['name' => 'New title']);
@@ -58,9 +57,48 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_do_not_records_given_column()
+    public function it_record_only_events_given_by_activiko()
     {
-        //$this->expectException(ActivityDoesNotExists::class);
+        app('activiko')->onlyRecordsEvents(['updated']);
+        Post::create(['name' => 'Title post', 'body' => 'blabla']);
+        $post = Post::find(1);
+        $post->update(['name' => 'New title', 'body' => 'hello']);
+        $this->assertEquals(1, $post->activities->count());
+    }
+
+    /** @test */
+    public function it_do_not_records_if_recording_is_disable_by_activiko()
+    {
+        Post::create(['name' => 'Title post']);
+        $post = Post::find(1);
+        app('activiko')->disable();
+        $post->update(['name' => 'New title', 'body' => 'body']);
+        $this->assertCount(1, Activiko::all());
+    }
+
+    /** @test */
+    public function it_do_not_records_if_recording_is_disable_by_property_model()
+    {
+        // TODO
+        $this->assertTrue(true);
+    }
+
+    /** @test */
+    public function it_do_not_records_if_recording_is_disable_by_method_model()
+    {
+        // TODO
+        $this->assertTrue(true);
+    }
+
+    //TODO
+    // It can enable recording by model
+    // It can enable recording by activiko
+
+    /** @test */
+    public function it_do_not_record_the_fields_given_by_the_property_model()
+    {
+        // TODO
+        // Add Disable fields method an array or a string
         Post2::create(['name' => 'Title post']);
         $post = Post2::find(1);
         $post->update(['name' => 'New title', 'body' => 'body']);
@@ -69,12 +107,27 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function it_do_not_records_if_its_disable()
+    public function it_do_not_record_the_fields_given_by_the_method_model()
     {
-        Post::create(['name' => 'Title post']);
+        // TODO
+        // Add Disable fields method an array or a string
+        Post::create(['name' => 'Title post', 'body' => 'blabla']);
         $post = Post::find(1);
-        $post->disableRecord();
-        $post->update(['name' => 'New title', 'body' => 'body']);
-        $this->assertCount(1, Activiko::all());
+        $post->disableFields(['body']);
+        $post->update(['name' => 'New title', 'body' => 'hello']);
+        $this->assertFalse(array_key_exists('body', $post->lastChanges('before')));
+        $this->assertFalse(array_key_exists('body', $post->lastChanges('before')));
     }
+
+    /** @test */
+    public function it_do_not_record_the_fields_given_by_activiko()
+    {
+        // TODO
+        $this->assertTrue(true);
+    }
+
+    //TODO
+    // it_record_only_the_fields_given_by_the_method_model
+    // it_record_only_the_fields_given_by_the_property_model
+    // it_record_only_the_fields_given_by_activiko
 }

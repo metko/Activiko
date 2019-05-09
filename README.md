@@ -17,9 +17,19 @@ composer require metko/activiko
 
 ## Usage
 
+Just use the trait Activiko in the model you want to be recorded.
+
 ``` php
-// Usage description here
+use Metko\Activiko\Traits\RecordActiviko;
 ```
+The model will record automaticaly the following events : 'created', 'update' and 'deleted'.
+
+If you want to modify this globaly, you can update the "recordableEvents" in the config file. Or at the top of your model, just declare a property call recordable events:
+
+``` php
+protected static $recordableEvents = ['updated']; // Only the updated event for this model
+```
+
 
 ### Testing
 

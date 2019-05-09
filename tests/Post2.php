@@ -11,5 +11,5 @@ class Post2 extends Model
     protected $table = 'posts';
     protected $guarded = [];
     protected static $recordableEvents = ['updated'];
-    protected $excludeOfRecords = ['body'];
+    protected static $excludeOfRecords = ['body'];
 }
